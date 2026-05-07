@@ -1,4 +1,4 @@
-# Atlas · v3.7
+# Atlas · v3.8
 
 A complete personal growth tracker — goals, habits, wins, journal — as a single self-contained HTML file with full PWA support.
 
@@ -81,6 +81,12 @@ Since the main file is `index.html`, you can host the bundle anywhere — GitHub
 ## Privacy
 
 100% local. Nothing leaves your device. No accounts, no analytics, no tracking, no cloud sync. Your data lives in your browser's storage and only there. Use the export feature to back up.
+
+## Version 3.8 changelog
+
+- App icon added to the top-left of the main page (tap to return to dashboard)
+- Fixed broken inline SVG icons in welcome screen and footer (rect width attributes were inheriting wrong values)
+- Unique gradient IDs across all 3 inline icons (no more SVG ID collisions)
 
 ## Version 3.7 changelog
 
