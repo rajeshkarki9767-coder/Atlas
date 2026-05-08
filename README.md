@@ -1,4 +1,4 @@
-# Atlas · v3.8
+# Atlas · v4.1
 
 A complete personal growth tracker — goals, habits, wins, journal — as a single self-contained HTML file with full PWA support.
 
@@ -81,6 +81,96 @@ Since the main file is `index.html`, you can host the bundle anywhere — GitHub
 ## Privacy
 
 100% local. Nothing leaves your device. No accounts, no analytics, no tracking, no cloud sync. Your data lives in your browser's storage and only there. Use the export feature to back up.
+
+## Version 4.1 changelog
+
+Major feature update — 12 new capabilities across the app:
+
+**Editing & corrections**
+- Edit wins (titles + descriptions) without losing them
+- Edit journal entries — text and mood — anytime
+- Edit goal progress directly with a number input (no more endless +/− tapping)
+
+**Backdate habits**
+- Long-press any habit row on the dashboard to open an action menu
+- Mark for today / yesterday / pick any past date / skip with reason / view stats
+
+**Streak freezes**
+- Earn 1 freeze every 14-day streak (max 3 banked)
+- Auto-applied to protect a single missed day if your streak is ≥ 7
+- Frozen days display with a 🛡 badge in heatmap
+
+**Goal milestones**
+- When sub-tasks count meets goal target, they become trackable milestones
+- Header shows "Milestones · 5/12" with auto-progress sync
+- Better placeholder text guides milestone naming
+
+**Calendar & review screens**
+- New **Calendar** view with month-by-month activity dots (habits, wins, journal, freezes)
+- New **Weekly Review** with overall %, activity-by-day chart, per-habit breakdown
+- Both accessible from the Home tab
+
+**Year heatmap**
+- GitHub-style 53-week contribution graph per habit
+- Toggle from any habit's detail page
+
+**Drag-to-reorder**
+- "Reorder" button on Goals and Habits tabs enters reorder mode
+- HTML5 drag on desktop + custom touch drag on iOS/Android
+- Visual drop indicators, haptic feedback
+
+**Unified search**
+- Magnifier button in topbar opens full-screen search
+- Searches across goals, habits, wins, and journal in one query
+- Highlights matching terms inline
+
+**Notifications & reminders**
+- Browser notifications when Atlas is running (Settings → Notifications)
+- Daily reminder at your chosen time (default 9pm)
+- Per-habit reminder times in habit edit modal
+- Notification action handlers (when used with service worker)
+
+**Offline support**
+- Inline service worker caches the app for offline access
+- Network-first for HTML, cache-first for assets
+- Only registers when served from HTTP/HTTPS (not file://)
+
+**Polish**
+- Better empty states with hints throughout
+- Frozen heatmap cells styled distinctly
+
+## Version 4.0 changelog
+
+- **Multi-tier storage system:** Now uses IndexedDB → localStorage → window.storage cascade. Previously only localStorage which can be unreliable on Android `file://` URLs. IndexedDB is far more durable.
+- **Auto-save on app close:** Saves state when the tab is hidden (`visibilitychange`), the page is unloaded (`pagehide`), or the browser is closing (`beforeunload`). Insurance against data loss.
+- **Storage diagnostics:** New "Storage" entry in Settings → Data shows you exactly which backends are working, how much data is stored, when the last save happened, and runs live read/write tests. If something is broken, you'll see it instantly.
+- **Goal deadline picker (v3.9 follow-up):** Custom 3-dropdown picker working alongside DOB picker.
+
+## If data still won't persist
+
+Open Settings → Data → **Storage** in the app. The diagnostics modal will tell you exactly what's happening. Common causes:
+
+1. **`file://` URL on Android Chrome** — Android may treat localStorage as session-only when the file is opened directly. **Fix:** host the file (Netlify Drop, GitHub Pages — see below).
+2. **Private/incognito mode** — storage clears when you close the tab. Open the file in a normal tab.
+3. **"Clear browsing data"** — wipes the app's storage too. Use Export regularly.
+4. **Browser storage quota exceeded** — unlikely (~200 KB needed) but possible with huge journals.
+
+## Version 3.9 changelog
+
+- **Storage fix:** Now uses `localStorage` as primary (works on installed PWA and any browser). Previous versions used a Claude artifact API that doesn't exist on your phone, causing data loss on install.
+- **Goal deadline picker:** Replaced clunky native date input with the custom 3-dropdown picker (Day / Month / Year) — same as DOB picker, no more stuck-open native overlay.
+- **Better PWA manifest:** Added `id`, `scope`, `orientation`, `description`, `categories`, and proper `purpose: maskable` for the install icon.
+- **Chrome logo explainer:** New note in install guide — if you see the Chrome badge on your icon, it means the file was installed as a shortcut. Host it on GitHub Pages / Netlify / Vercel for a clean install.
+
+## Why hosting matters for the icon
+
+When you double-click an HTML file and use Chrome's "Add to Home Screen", Android creates a **bookmark shortcut** (with the Chrome logo overlay), not a true PWA. To get the gold-A icon without any badge, the file needs to be served from a real URL. Free options:
+
+- **GitHub Pages:** create a repo, upload `index.html` + the icon files, enable Pages → instant URL
+- **Netlify Drop:** drag the folder to netlify.com/drop → instant URL
+- **Vercel:** `vercel deploy` from the folder
+
+Once installed from a real URL, the icon will be clean.
 
 ## Version 3.8 changelog
 
