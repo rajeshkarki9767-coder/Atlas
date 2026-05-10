@@ -13,16 +13,21 @@
 <stop offset="100%" stop-color="#d4a04a" stop-opacity="0"/>
 </radialGradient>
 </defs>
-<!-- Rounded square background -->
+<!-- Rounded-square background -->
 <rect width="512" height="512" rx="112" ry="112" fill="url(#bg)"/>
-<!-- Subtle radial glow -->
 <rect width="512" height="512" rx="112" ry="112" fill="url(#glow)"/>
 <!-- Decorative concentric arcs -->
 <circle cx="256" cy="256" r="200" fill="none" stroke="#d4a04a" stroke-width="1.5" stroke-opacity="0.12"/>
 <circle cx="256" cy="256" r="160" fill="none" stroke="#d4a04a" stroke-width="1.5" stroke-opacity="0.08"/>
-<!-- Bold "A" mark — geometric, matches Manrope feel -->
-<g transform="translate(256, 270)">
-<path d="M -80 110 L -8 -100 L 8 -100 L 80 110 L 38 110 L 22 60 L -22 60 L -38 110 Z" fill="url(#acc)"/>
-<rect x="-30" y="20" width="60" height="20" fill="url(#acc)"/>
-</g>
+<!-- Geometric capital A built from 3 shapes:
+     1. Left leg (parallelogram from bottom-left to apex)
+     2. Right leg (parallelogram from apex to bottom-right)
+     3. Horizontal crossbar
+     A is centered at x=256, spans y=140..380, width ~200 -->
+<!-- Left leg: outer (156,380) → top-left at apex (236,140) → top-right (272,140) → inner bottom (200,380) -->
+<polygon points="156,380 236,140 272,140 200,380" fill="url(#acc)"/>
+<!-- Right leg: mirror of left leg -->
+<polygon points="240,140 276,140 356,380 312,380" fill="url(#acc)"/>
+<!-- Crossbar: connects the two legs at ~mid-height -->
+<rect x="206" y="262" width="100" height="32" fill="url(#acc)"/>
 </svg>

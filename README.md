@@ -1,4 +1,4 @@
-# Atlas · v4.1
+# Atlas · v4.3
 
 A complete personal growth tracker — goals, habits, wins, journal — as a single self-contained HTML file with full PWA support.
 
@@ -81,6 +81,19 @@ Since the main file is `index.html`, you can host the bundle anywhere — GitHub
 ## Privacy
 
 100% local. Nothing leaves your device. No accounts, no analytics, no tracking, no cloud sync. Your data lives in your browser's storage and only there. Use the export feature to back up.
+
+## Version 4.3 changelog
+
+- **Real "A" letterform.** Redesigned the icon from a chevron-with-stick into a proper geometric capital A with two diagonal legs and a real crossbar. Updated the SVG source, all 3 PNG sizes (192/512/1024), and all 3 inline SVGs in the app (topbar / welcome / footer).
+- **Manifest now references PNG files.** Previously used base64 SVG data URLs which some Android versions reject for PWA install. Now the manifest points to `atlas-icon-192.png`, `atlas-icon-512.png` (both `any` and `maskable` purposes), and `atlas-icon.svg` as fallback. **This is the key fix for the Chrome badge issue when installed from a hosted URL.**
+- **Apple touch icons added.** New `<link rel="apple-touch-icon">` and `<link rel="icon">` entries so iOS Safari and Android Chrome use the real icon files for home-screen install instead of generating one from a screenshot.
+- **Smaller manifest.** Went from ~6500 chars (3 base64 SVGs embedded) to 1096 chars referencing the bundled PNGs.
+
+## Version 4.2 changelog
+
+- **Undo for accidental taps:** When you tap "Done" on a habit, the toast now has an "Undo" button (visible for 2 seconds). Taps work both ways — mark and unmark.
+- **Past days are now read-only on the dashboard week strip and heatmap.** Only today is tappable. Past dates show a hint: "Long-press the row to backdate or skip" — keeping the intentional path through the long-press action menu.
+- **Cleaned up duplicate `.toast.show` CSS rule.**
 
 ## Version 4.1 changelog
 
