@@ -1,16 +1,19 @@
-# Atlas · v4.3
+# Atlas · v4.5
 
 A complete personal growth tracker — goals, habits, wins, journal — as a single self-contained HTML file with full PWA support.
 
 ## What's in this bundle
 
-| File | Purpose |
-|---|---|
-| **`index.html`** | The complete app · 164 KB · open in any browser |
-| `atlas-icon.svg` | Vector source for the app icon · 1 KB |
-| `atlas-icon-192.png` | 192×192 PNG · for PWA manifest |
-| `atlas-icon-512.png` | 512×512 PNG · for iOS / large displays |
-| `atlas-icon-1024.png` | 1024×1024 PNG · App Store / max resolution |
+```
+Atlas/
+├── index.html              The complete app (243 KB)
+├── icons/
+│   ├── atlas-icon.svg      Vector source
+│   ├── atlas-icon-192.png  PWA manifest icon
+│   ├── atlas-icon-512.png  iOS / large displays
+│   └── atlas-icon-1024.png Max resolution
+└── README.md               This file
+```
 
 ## Quick start
 
@@ -81,6 +84,52 @@ Since the main file is `index.html`, you can host the bundle anywhere — GitHub
 ## Privacy
 
 100% local. Nothing leaves your device. No accounts, no analytics, no tracking, no cloud sync. Your data lives in your browser's storage and only there. Use the export feature to back up.
+
+## Version 4.5 changelog — final pre-release audit fixes
+
+5 real issues found and fixed during deep audit:
+
+- **MED — Backdate picker used native `<input type="date">`**. This was a regression of the earlier complaint about Android's dismissal issue with native date pickers. Replaced with the same custom 3-dropdown picker used for DOB and goal deadlines.
+- **MED — Reorder mode state leaked across tabs.** If you tapped "Reorder" on Goals then switched to Habits, the global `reorderMode` stayed `'goals'`. Now `goTo()` clears the reorder mode and resets the toolbar UI when navigating between tabs.
+- **LOW — Year heatmap toggle persisted across habit views.** Toggling year view on habit A would leave it on when opening habit B. Now reset on every `openHabitDetail()`.
+- **LOW — `notifFiredToday` Set grew unbounded.** It collected one entry per fired reminder per day, never pruned. Now prunes stale entries (anything not containing today's date) when the Set exceeds 50.
+- **LOW — Changing daily reminder time didn't clear the "already fired" marker.** If you'd received today's reminder at 9pm and then changed it to 10pm, the new time wouldn't re-fire. Now clears the daily marker on every `updateDailyReminder()` call.
+
+**Items checked and verified clean:**
+- 169 function definitions, 0 duplicates, 0 unused
+- 40 top-level const/let declarations, 0 duplicates
+- 87 inline event handlers, all wired to defined functions
+- 9 SVG gradient IDs, all unique
+- 36 CSS variables defined, 34 referenced, 0 undefined
+- 4 base64 SVG icons, all using the new clean A geometry
+- 0 console.log statements, 0 debugger statements, 0 native confirm/alert
+- 0 duplicate CSS rules
+- All async state mutations awaited; saveState wrapped in try/catch
+- IndexedDB Blob URL revoked after service worker registration
+- Storage tier cascade verified (IndexedDB → localStorage → window.storage)
+- All risky `${X.title}` interpolations either escaped with `escapeHtml()` or in safe contexts (object literals, controlled string data)
+
+## Version 4.4 changelog
+
+**Bug fixes**
+- **Old broken "A" was still in 4 base64-encoded icons** — the apple-touch-icon links (iOS home-screen icon) and the notification icon/badge data URLs. iOS users adding to home screen would have seen the old chevron-A; notifications on Android would have shown it too. All 4 now use the proper geometric A geometry.
+
+**Mobile UX polish**
+- **Touch targets:** icon buttons enlarged from 38px to 44px (Apple HIG minimum). Primary buttons get a 48px min-height.
+- **Bottom nav:** refined with a small active indicator bar above each tab, slightly more compact labels, better behavior on small (≤340px) screens.
+- **Modals get an iOS-style handle bar** at the top edge (the small grey pill). Hidden on desktop where it doesn't belong.
+- **Tap outside modal to dismiss.** Escape key closes any open modal or the search overlay.
+- **Inputs get a soft focus ring** (3px accent-tinted glow) for clearer feedback when typing.
+- **Focused inputs scroll into view** so the mobile keyboard doesn't cover what you're typing.
+- **Stronger button press feedback** — sharper scale + shadow lift, no hover-only states (which don't apply on touch).
+- **Haptic nudge on every nav tap.** Tapping the active tab also smoothly scrolls back to top.
+- **Journal textarea bumped to 140px** for a more comfortable writing surface.
+- **Topbar tightened on small screens** with a dedicated breakpoint at 340px.
+- **Dash tiles** (Calendar / Weekly Review) get better hover and press states.
+- **Better empty states** — bigger icons, more breathing room, separator line between message and hint.
+
+**Code hygiene**
+- Removed 3 duplicate CSS rules from the bottom nav block introduced during edits.
 
 ## Version 4.3 changelog
 
